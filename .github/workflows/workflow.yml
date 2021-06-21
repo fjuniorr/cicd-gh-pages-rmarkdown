@@ -31,9 +31,13 @@ jobs:
 
       - run: echo ${{ steps.branch.outputs.BRANCH_NAME }}
 
+      - uses: nelonoel/branch-name@v1.0.1
+
+      - run: echo ${BRANCH_NAME}
+
       - name: Deploy gh pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          destination_dir: ./${( steps.branch.outputs.BRANCH_NAME }}
+          destination_dir: ${BRANCH_NAME}
