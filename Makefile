@@ -8,3 +8,12 @@ help:
 
 validate: ## Validate resource
 	frictionless validate datapackage.json
+
+build: 
+	Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
+
+deploy: 
+	git checkout gh-pages
+
+clean:	
+	rm -rf public/
