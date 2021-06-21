@@ -7,7 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
       - run: cat datapackage.json
-      - run: npm install -g bats
-      - run: bats -v
+
+      - run: head data/estados.csv
+
+      - name: Set branch name
+        id: branch
+        run: echo "::set-output name=BRANCH_NAME::${GITHUB_REF##*/}"
+
+      - name: Get color
+        run: echo "The current branch is ${{ steps.branch.outputs.BRANCH_NAME }}"
