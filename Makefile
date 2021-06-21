@@ -1,5 +1,7 @@
 .PHONY: help validate
 
+BRANCH_NAME=`git rev-parse --abbrev-ref HEAD`
+
 #====================================================================
 # PHONY TARGETS
 
@@ -10,7 +12,7 @@ validate: ## Validate resource
 	frictionless validate datapackage.json
 
 build: 
-	Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
+	Rscript scripts/build.R $(BRANCH_NAME)
 
 deploy: 
 	git checkout gh-pages
