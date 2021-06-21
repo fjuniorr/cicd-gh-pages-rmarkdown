@@ -8,10 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: cat datapackage.json
-
-      - run: head data/estados.csv
-
       - name: Set branch name
         id: branch
         run: echo "::set-output name=BRANCH_NAME::${GITHUB_REF##*/}"
@@ -20,24 +16,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Install dependencies
-        run: Rscript -e 'install.packages("rmarkdown")'
+      - run: Rscript -e 'install.packages("rmarkdown")'
 
-      - name: Render Site
-        run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
+      - run: Rscript scripts/build.R ${{ steps.branch.outputs.BRANCH_NAME }}
 
-      - name: Get color
-        run: echo "The current branch is ${{ steps.branch.outputs.BRANCH_NAME }}"
-
-      - run: echo ${{ steps.branch.outputs.BRANCH_NAME }}
-
-      - uses: nelonoel/branch-name@v1.0.1
-
-      - run: echo ${BRANCH_NAME}
-
-      - name: Deploy gh pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          destination_dir: ${BRANCH_NAME}
+      - run: git checkout gh-pages
+      - run: git add ${{ steps.branch.outputs.BRANCH_NAME }}/*
+      - run: git commit -m "Atualiza branch ${{ steps.branch.outputs.BRANCH_NAME }}"
+      - run: git push origin gh-pages

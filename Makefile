@@ -16,6 +16,9 @@ build:
 
 deploy: 
 	git checkout gh-pages
+	git add $(BRANCH_NAME)/*
+	git commit -m "Atualiza branch $(BRANCH_NAME)"
+	git push origin gh-pages
 
 clean:	
 	rm -rf public/
