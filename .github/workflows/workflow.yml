@@ -21,7 +21,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Install dependencies
-        run: install.packages("rmarkdown")
+        run: Rscript -e 'install.packages("rmarkdown")'
 
       - name: Render Site
         run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
