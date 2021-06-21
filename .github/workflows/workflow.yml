@@ -26,6 +26,11 @@ jobs:
       - name: Render Site
         run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
 
+      - name: Get color
+        run: echo "The current branch is ${{ steps.branch.outputs.BRANCH_NAME }}"
+
+      - run: echo ${{ steps.branch.outputs.BRANCH_NAME }}
+
       - name: Deploy gh pages
         uses: peaceiris/actions-gh-pages@v3
         with:
