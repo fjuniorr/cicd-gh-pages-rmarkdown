@@ -7,28 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - run: cat datapackage.json
-
-      - run: head data/estados.csv
-
-      - name: Set branch name
-        id: branch
-        run: echo "::set-output name=BRANCH_NAME::${GITHUB_REF##*/}"
-
-      - uses: r-lib/actions/setup-r@master
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Install dependencies
-        run: install.packages("rmarkdown")
-
-      - name: Render Site
-        run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "public")'
-
-      - name: Deploy gh pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          destination_dir: ${( steps.branch.outputs.BRANCH_NAME }}
+      - run: cat data/github-api.csv
